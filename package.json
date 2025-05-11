@@ -1,0 +1,43 @@
+{
+  "name": "tsmocker",
+  "version": "1.0.0",
+  "description": "Generate mock data from TypeScript interfaces",
+  "main": "dist/cli.js",
+  "bin": {
+    "tsmocker": "dist/cli.js"
+  },
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/cli.js",
+    "dev": "ts-node src/cli.ts",
+    "test": "jest",
+    "lint": "eslint . --ext .ts",
+    "prettier": "prettier --write \"src/**/*.ts\""
+  },
+  "keywords": [
+    "typescript",
+    "mock",
+    "cli",
+    "faker"
+  ],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@faker-js/faker": "^9.7.0",
+    "commander": "^13.1.0",
+    "csv-stringify": "^6.5.2",
+    "ts-morph": "^25.0.1",
+    "typescript": "^5.8.3"
+  },
+  "devDependencies": {
+    "@types/jest": "^29.5.14",
+    "@types/node": "^22.15.17",
+    "@typescript-eslint/eslint-plugin": "^8.32.0",
+    "@typescript-eslint/parser": "^8.32.0",
+    "eslint": "^9.26.0",
+    "jest": "^29.7.0",
+    "prettier": "^3.5.3",
+    "ts-jest": "^29.3.2",
+    "ts-node": "^10.9.2"
+  }
+}

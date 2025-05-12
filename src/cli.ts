@@ -21,12 +21,31 @@ program
 
 program
   .requiredOption('-s, --schema <file>', 'Path to TypeScript file containing interfaces')
-  .requiredOption('-i, --interface <name>', 'Name of the interface to mock')
+  .requiredOption('-i, --interface <n>', 'Name of the interface to mock')
   .option('-c, --count <number>', 'Number of mock objects to generate', '1')
   .option('-o, --output <format>', 'Output format (json or csv)', 'json')
   .option('-f, --out-file <file>', 'Output file path (if not specified, prints to stdout)');
 
 program.parse(process.argv);
+
+/**
+ * Draws a fancy CLI panel showing the current configuration
+ */
+const drawWelcomePanel = (options: CommandOptions) => {
+  console.log('\n🧪  Welcome to TSMocker!');
+  console.log('────────────────────────────────────────────');
+  console.log('📄 Schema:       ', options.schema);
+  console.log('🧬 Interface:    ', options.interface);
+  console.log('📦 Count:        ', options.count.toString());
+  console.log('📊 Output:       ', options.output.toUpperCase());
+  if (options.outFile) {
+    console.log('💾 Output File:  ', options.outFile);
+  } else {
+    console.log('💾 Output:       ', 'stdout (console)');
+  }
+  console.log('────────────────────────────────────────────');
+  console.log('Generating mock data...');
+};
 
 const run = async () => {
   try {
@@ -50,6 +69,12 @@ const run = async () => {
       process.exit(1);
     }
 
+    // Display welcome panel
+    drawWelcomePanel({
+      ...options,
+      count: count,
+    });
+
     // Parse the TypeScript interface
     const parser = new Parser();
     const interfaceInfo = parser.parseFile(options.schema, options.interface);
@@ -64,8 +89,9 @@ const run = async () => {
     // Output the result
     if (options.outFile) {
       fs.writeFileSync(options.outFile, output);
-      console.log(`Mock data written to ${options.outFile}`);
+      console.log('✅ Done! Mock data written to ' + options.outFile);
     } else {
+      console.log('✅ Done!');
       console.log(output);
     }
   } catch (error) {

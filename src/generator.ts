@@ -58,13 +58,8 @@ export class Generator {
     if (name === 'role') {
       return faker.helpers.arrayElement(['admin', 'user', 'guest']);
     }
-    
-    // Special handling for date-related properties
-    if (name.includes('date') || name.includes('time') || name === 'birthdate' || name === 'lastlogin') {
-      return faker.date.recent();
-    }
 
-    switch (property.type) {
+    switch (property.type as TypeKind) {
       case 'string':
         // Generate more meaningful values based on property name
         if (name.includes('email')) {
@@ -140,15 +135,17 @@ export class Generator {
       
       case 'date':
         if (name.includes('birth')) {
-          return faker.date.birthdate();
+          return faker.date.birthdate().toISOString();
         } else if (name.includes('created')) {
-          return faker.date.past();
+          return faker.date.past().toISOString();
         } else if (name.includes('updated')) {
-          return faker.date.recent();
+          return faker.date.recent().toISOString();
         } else if (name.includes('future') || name.includes('due')) {
-          return faker.date.future();
+          return faker.date.future().toISOString();
+        } else if (name.includes('time') || name === 'lastlogin') {
+          return faker.date.recent().toISOString();
         } else {
-          return faker.date.recent();
+          return faker.date.recent().toISOString();
         }
       
       case 'array':
@@ -227,7 +224,7 @@ export class Generator {
               userId: faker.string.uuid(),
               rating: faker.number.int({ min: 1, max: 5 }),
               comment: faker.lorem.paragraph(),
-              date: faker.date.recent(),
+              date: faker.date.recent().toISOString(),
               verified: faker.datatype.boolean(),
             })),
           };
@@ -297,7 +294,7 @@ export class Generator {
           () => faker.string.sample(),
           () => faker.number.int(),
           () => faker.datatype.boolean(),
-          () => faker.date.recent(),
+          () => faker.date.recent().toISOString(),
           () => ({}),
           () => [],
         ];

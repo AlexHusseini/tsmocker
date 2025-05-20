@@ -1,0 +1,119 @@
+[
+  {
+    "id": 7056,
+    "firstName": "Columbus",
+    "lastName": "Schuster",
+    "email": "Joan_Reichert@hotmail.com",
+    "username": "Beulah.Stoltenberg",
+    "isActive": true,
+    "birthDate": "2025-05-10T08:36:02.496Z",
+    "role": "admin",
+    "address": {
+      "street": "165 Noemi Junction",
+      "city": "Gerholdside",
+      "state": "Pennsylvania",
+      "zipCode": "80499-7360",
+      "country": "Taiwan"
+    },
+    "phoneNumbers": [
+      "(812) 652-1370 x79682",
+      "(555) 230-6612",
+      "874.707.4505 x571",
+      "465-767-7846"
+    ],
+    "tags": [
+      "yum",
+      "pish",
+      "responsibility",
+      "handover",
+      "powerfully"
+    ],
+    "socialProfiles": {},
+    "settings": {
+      "theme": "system",
+      "notifications": true,
+      "language": "en"
+    },
+    "metadata": {
+      "gadzooks": true,
+      "once": ",a9LF6>9$$",
+      "guide": 7704993889819662
+    }
+  },
+  {
+    "id": 9219,
+    "firstName": "Palma",
+    "lastName": "Kertzmann",
+    "email": "Ben_DuBuque@gmail.com",
+    "username": "Elvie58",
+    "isActive": true,
+    "birthDate": "2025-05-10T05:22:18.097Z",
+    "role": "user",
+    "lastLogin": "2025-05-10T14:22:52.182Z",
+    "address": {
+      "street": "16653 E 2nd Street",
+      "city": "Leslystad",
+      "state": "Minnesota",
+      "zipCode": "15518-3706",
+      "country": "Norway"
+    },
+    "phoneNumbers": [
+      "(692) 345-3545 x72211",
+      "(815) 249-3207"
+    ],
+    "tags": [
+      "major",
+      "joint",
+      "drat"
+    ],
+    "settings": {
+      "theme": "dark",
+      "notifications": true,
+      "language": "de"
+    },
+    "metadata": {
+      "only": 1917433284288259,
+      "inhibit": true,
+      "begonia": "<g?#v-K>`8"
+    }
+  },
+  {
+    "id": 8780,
+    "firstName": "Delia",
+    "lastName": "Grady",
+    "email": "Emiliano.Hyatt17@gmail.com",
+    "username": "Percy60",
+    "isActive": true,
+    "birthDate": "2025-05-10T06:28:36.413Z",
+    "role": "guest",
+    "lastLogin": "2025-05-10T08:18:49.735Z",
+    "address": {
+      "street": "75383 Ward Oval",
+      "city": "Jacobsburgh",
+      "state": "Georgia",
+      "zipCode": "39785",
+      "country": "France"
+    },
+    "phoneNumbers": [
+      "(786) 290-3818 x599",
+      "1-677-739-3914",
+      "710-315-1212 x2253",
+      "842-384-3700 x787",
+      "1-249-691-4580 x06024"
+    ],
+    "tags": [
+      "concerned",
+      "outset",
+      "gosh",
+      "painfully"
+    ],
+    "settings": {
+      "theme": "light",
+      "notifications": false,
+      "language": "es"
+    },
+    "metadata": {
+      "shadowy": 8855287942200213
+    }
+  }
+]

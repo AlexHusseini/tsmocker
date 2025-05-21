@@ -81,20 +81,23 @@ export class Parser {
       return 'boolean';
     } else if (type.isArray()) {
       return 'array';
+    } else if (
+      (type.isClass() && type.getSymbol()?.getName() === 'Date') ||
+      type.getText().toLowerCase().includes('date')
+    ) {
+      return 'date';
+    } else if (type.isIntersection()) {
+      return 'intersection';
     } else if (type.isObject() && !type.isArray()) {
       return 'object';
     } else if (type.isUnion()) {
       // Check if this is a string literal union
       const unionTypes = type.getUnionTypes();
       const isStringLiteralUnion = unionTypes.every(t => t.isStringLiteral());
-      
       if (isStringLiteralUnion) {
         return 'stringLiteralUnion';
       }
-      
       return 'union';
-    } else if (type.getText().toLowerCase().includes('date')) {
-      return 'date';
     } else if (type.isAny()) {
       return 'any';
     } else {
@@ -117,6 +120,46 @@ export class Parser {
             ...this.parseTypeDetails(elementType),
           },
         };
+      }
+    }
+    
+    else if (type.isIntersection()) {
+      const properties: PropertyInfo[] = [];
+      
+      // Get all properties from each type in the intersection
+      const intersectionTypes = type.getIntersectionTypes();
+      
+      for (const intersectionType of intersectionTypes) {
+        // If the intersection type is an object, get its properties
+        if (intersectionType.isObject()) {
+          try {
+            const objectProperties = intersectionType.getProperties();
+            
+            if (objectProperties && objectProperties.length > 0) {
+              for (const prop of objectProperties) {
+                const propName = prop.getName();
+                const propType = prop.getValueDeclaration()?.getType() || prop.getTypeAtLocation(prop.getValueDeclaration()!);
+                
+                if (propType) {
+                  const isOptional = prop.isOptional();
+                  
+                  properties.push({
+                    name: propName,
+                    type: this.getTypeKind(propType),
+                    isOptional,
+                    ...this.parseTypeDetails(propType),
+                  });
+                }
+              }
+            }
+          } catch (error) {
+            // Ignore errors and continue
+          }
+        }
+      }
+      
+      if (properties.length > 0) {
+        return { properties };
       }
     }
     

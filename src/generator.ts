@@ -167,7 +167,21 @@ export class Generator {
           } else {
             // Default array generation - recursively generate each element based on the element type
             for (let i = 0; i < arrayLength; i++) {
-              array.push(this.generatePropertyValue(property.elementType));
+              // Check if this is a nested array of objects
+              if (property.elementType.type === 'array' && property.elementType.elementType) {
+                // Handle specifically the case of Array<Array<{...}>>
+                const innerArrayLength = faker.number.int({ min: 1, max: 5 });
+                const innerArray: unknown[] = [];
+                
+                for (let j = 0; j < innerArrayLength; j++) {
+                  // Recursively generate the inner array elements
+                  innerArray.push(this.generatePropertyValue(property.elementType));
+                }
+                array.push(innerArray);
+              } else {
+                // Regular case - just add a single element
+                array.push(this.generatePropertyValue(property.elementType));
+              }
             }
             return array;
           }
@@ -302,6 +316,13 @@ export class Generator {
         return randomGenerator();
       
       case 'unknown':
+      case 'intersection':
+        // For intersection types, generate an object with all properties
+        if (property.properties && property.properties.length > 0) {
+          return this.generateObject(property.properties);
+        }
+        return {};
+      
       default:
         return null;
     }
@@ -312,7 +333,18 @@ export class Generator {
    */
   public formatOutput(data: unknown[], format: OutputFormat): string {
     if (format === 'json') {
-      return JSON.stringify(data, null, 2);
+      // Use a custom replacer function to handle Date objects properly
+      return JSON.stringify(data, (key, value) => {
+        // Convert Date objects to ISO strings
+        if (value instanceof Date) {
+          return value.toISOString();
+        }
+        // Handle special case for Date objects that haven't been properly serialized
+        if (value && typeof value === 'object' && 'toISOString' in value && typeof value.toISOString === 'function') {
+          return value.toISOString();
+        }
+        return value;
+      }, 2);
     } else if (format === 'csv') {
       // For CSV, we need to flatten the data
       return stringify(this.flattenData(data), {

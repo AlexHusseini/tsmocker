@@ -15,6 +15,10 @@ export class Parser {
     });
   }
 
+  public getProject(): Project {
+    return this.project;
+  }
+
   public parseFile(filePath: string, interfaceName: string): InterfaceInfo {
     const absolutePath = path.resolve(process.cwd(), filePath);
     const sourceFile = this.project.addSourceFileAtPath(absolutePath);

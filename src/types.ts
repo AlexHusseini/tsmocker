@@ -16,7 +16,6 @@ export type TypeKind =
   | 'object'
   | 'union'
   | 'stringLiteralUnion'
-  | 'intersection'
   | 'date'
   | 'any'
   | 'unknown';

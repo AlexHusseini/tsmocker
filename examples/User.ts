@@ -1,6 +1,3 @@
-/**
- * Address data for a user
- */
 export interface Address {
   street: string;
   city: string;
@@ -9,18 +6,12 @@ export interface Address {
   country?: string;
 }
 
-/**
- * Role enum for user's role
- */
 export enum Role {
   Admin = 'admin',
   User = 'user',
   Guest = 'guest',
 }
 
-/**
- * Social media profiles
- */
 export interface SocialProfiles {
   twitter?: string;
   facebook?: string;
@@ -28,9 +19,6 @@ export interface SocialProfiles {
   linkedin?: string;
 }
 
-/**
- * User model with various types
- */
 export interface User {
   id: number;
   firstName: string;
@@ -53,9 +41,6 @@ export interface User {
   metadata: Record<string, any>;
 }
 
-/**
- * Simple user for testing
- */
 export interface SimpleUser {
   id: number;
   name: string;

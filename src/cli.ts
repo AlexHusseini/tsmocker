@@ -43,6 +43,7 @@ function findTsFiles(dir: string = process.cwd()): string[] {
       }
     }
   } catch (error) {
+    console.warn(`Warning: Could not scan directory ${dir}`);
   }
   
   return files;
@@ -52,9 +53,10 @@ function findInterfaces(filePath: string): string[] {
   try {
     const parser = new Parser();
     const absolutePath = path.resolve(process.cwd(), filePath);
-    const sourceFile = parser['project'].addSourceFileAtPath(absolutePath);
+    const sourceFile = parser.getProject().addSourceFileAtPath(absolutePath);
     return sourceFile.getInterfaces().map((i: any) => i.getName() || 'Unknown');
   } catch (error) {
+    console.warn(`Warning: Could not parse interfaces from ${filePath}`);
     return [];
   }
 }

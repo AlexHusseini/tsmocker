@@ -43,7 +43,6 @@ function findTsFiles(dir: string = process.cwd()): string[] {
       }
     }
   } catch (error) {
-    // Ignore errors for directories we can't read
   }
   
   return files;
@@ -208,13 +207,11 @@ program
   .option('-f, --out-file <path>', 'Output file path')
   .option('--interactive', 'Run in interactive mode (default if no options provided)')
   .action(async (options) => {
-    // If no options provided, run interactive mode
     if (!options.schema && !options.interface) {
       await runInteractive();
       return;
     }
 
-    // Original command line mode for advanced users
     if (!options.schema || !options.interface) {
       console.log(chalk.red('❌ Both --schema and --interface are required for command line mode'));
       console.log(chalk.yellow('💡 Run without options for interactive mode, or use --help for details'));

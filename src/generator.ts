@@ -2,6 +2,14 @@ import { faker } from '@faker-js/faker';
 import { stringify } from 'csv-stringify/sync';
 import { InterfaceInfo, PropertyInfo, TypeKind, OutputFormat } from './types';
 
+const OPTIONAL_PROPERTY_CHANCE = 0.7;
+const DEFAULT_ARRAY_MIN_LENGTH = 1;
+const DEFAULT_ARRAY_MAX_LENGTH = 5;
+const DEFAULT_AGE_MIN = 18;
+const DEFAULT_AGE_MAX = 90;
+const DEFAULT_ID_MIN = 1;
+const DEFAULT_ID_MAX = 10000;
+
 export class Generator {
   
   public generateMockData(interfaceInfo: InterfaceInfo, count: number = 1): unknown[] {
@@ -18,7 +26,7 @@ export class Generator {
     const result: Record<string, unknown> = {};
     
     for (const property of properties) {
-      if (property.isOptional && Math.random() > 0.7) {
+      if (property.isOptional && Math.random() > OPTIONAL_PROPERTY_CHANCE) {
         continue;
       }
       
@@ -89,8 +97,8 @@ export class Generator {
   private generateNumber(property: PropertyInfo): number {
     const name = property.name.toLowerCase();
     
-    if (name.includes('id')) return faker.number.int({ min: 1, max: 10000 });
-    if (name.includes('age')) return faker.number.int({ min: 18, max: 90 });
+    if (name.includes('id')) return faker.number.int({ min: DEFAULT_ID_MIN, max: DEFAULT_ID_MAX });
+    if (name.includes('age')) return faker.number.int({ min: DEFAULT_AGE_MIN, max: DEFAULT_AGE_MAX });
     if (name.includes('price')) return parseFloat(faker.commerce.price());
     if (name.includes('rating')) return faker.number.float({ min: 1, max: 5, fractionDigits: 1 });
     
@@ -100,7 +108,7 @@ export class Generator {
   private generateArray(property: PropertyInfo): unknown[] {
     if (!property.elementType) return [];
     
-    const length = faker.number.int({ min: 1, max: 5 });
+    const length = faker.number.int({ min: DEFAULT_ARRAY_MIN_LENGTH, max: DEFAULT_ARRAY_MAX_LENGTH });
     const array: unknown[] = [];
     
     for (let i = 0; i < length; i++) {

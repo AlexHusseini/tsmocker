@@ -93,6 +93,7 @@ export class Parser {
   }
 
   private parseTypeDetails(type: Type): Partial<PropertyInfo> {
+    // Handle different type structures and extract additional metadata
     if (type.isArray()) {
       return this.parseArrayType(type);
     } else if (type.isObject() && !type.isArray()) {
@@ -103,6 +104,7 @@ export class Parser {
       return { literalValue: type.getLiteralValueOrThrow().toString() };
     }
     
+    // No additional details needed for simple types
     return {};
   }
 

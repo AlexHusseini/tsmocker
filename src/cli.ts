@@ -39,7 +39,8 @@ function findTsFiles(dir: string = process.cwd()): string[] {
       if (stat.isDirectory() && !item.startsWith('.') && item !== 'node_modules' && item !== 'dist') {
         files.push(...findTsFiles(fullPath));
       } else if (item.endsWith('.ts') && !item.endsWith('.d.ts')) {
-        files.push(path.relative(process.cwd(), fullPath));
+        const relativePath = path.relative(process.cwd(), fullPath);
+        files.push(relativePath);
       }
     }
   } catch (error) {
@@ -54,7 +55,7 @@ function findInterfaces(filePath: string): string[] {
     const parser = new Parser();
     const absolutePath = path.resolve(process.cwd(), filePath);
     const sourceFile = parser.getProject().addSourceFileAtPath(absolutePath);
-    return sourceFile.getInterfaces().map((i: any) => i.getName() || 'Unknown');
+    return sourceFile.getInterfaces().map(interfaceDecl => interfaceDecl.getName() || 'Unknown');
   } catch (error) {
     console.warn(`Warning: Could not parse interfaces from ${filePath}`);
     return [];
@@ -136,8 +137,11 @@ async function runInteractive(): Promise<void> {
   }
 
   await generateMockData({
-    ...answers,
-    ...options,
+    schemaFile: answers.schemaFile,
+    interfaceName: options.interfaceName,
+    count: options.count,
+    format: options.format,
+    saveToFile: options.saveToFile,
     fileName,
   });
 }
